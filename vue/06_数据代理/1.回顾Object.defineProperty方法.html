@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/回顾</title>
+</head>
+<body>
+    <script type="text/javascript">
+        let number = 18
+        let persion = {
+            name: "哈喽",
+            age: number,
+            sex: "male"
+        }
+
+        Object.defineProperty(persion, 'age', {
+            // 当读取persion的age属性时，get函数（getter）就会被调用
+            get(){
+                console.log("开始读取age")
+                return number
+            },
+
+            // 当修改persion的age属性时，set函数（setter）就会被调用，且会收到修改的具体值
+            set(value){
+                console.log("修改age,且数值为", value)
+                number = value
+            }
+        })
+
+        // // 可以对追加的属性，加一些限制
+        // Object.defineProperty(persion, 'sex', {
+        //     value: "male",
+        //     // 控制属性是否能枚举，默认是false
+        //     enumerable: true,
+        //     // 控制属性是否能修改，默认是false
+        //     writable: true,
+        //     // 控制属性是否可以被删除
+        //     configurable: true
+
+        // })
+        // console.log(persion)
+        // console.log(Object.keys(persion))
+        
+        // for (let key in persion){
+        //     console.log(persion[key])
+        // }
+    </script>
+</body>
+</html>
