@@ -52,6 +52,8 @@
         </div>
         <!-- 事件只触发一次（常用） -->
         <button @click.once="showInfo">只触发一次</button>
+        <!-- 修饰符可以连续写 -->
+				<!-- <a href="http://www.atguigu.com" @click.prevent.stop="showInfo">点我提示信息</a> -->
         <!-- 使用事件的捕获模式（常用） -->
         <div class="box1" @click.capture="showMsg(1, $event)">
             div1
