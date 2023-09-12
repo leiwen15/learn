@@ -5,20 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 20px;
+        }
+        .demo1{
+            height: 50px;
+            background-color: aqua;
+        }
+        .box1{
+            padding: 5px;
+            background-color: rgb(26, 255, 0);
+        }
+        .box2{
+            padding: 5px;
+            background-color: rgb(255, 0, 225);
+        }
+        .list{
+            width: 200px;
+            height: 200px;
+            background-color: blueviolet;
+            overflow: auto;
+        }
+        li{
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
     <!-- 
-        事件的基本使用：
-            1.使用v-on:xxx 或者@xxx 绑定事件，xxx是事件名
-            2。事件的回调需要配置在methods对象中，最终会出现在vm上
-            3.methods中配置的函数，不要用箭头函数！否则this就不是vm了
-            4.methods中配置的函数，都是被Vue所管理的函数，this的指向是vm，或者组件实例对象
-            5.@click="demo" 和@click="demo($event)" 效果一致，但是后者可以传参数
+       Vue中常用的事件修饰符：
+        1.prevent:阻止默认事件
+        2.stop 阻止事件冒泡
+        3.once 事件只触发一次
+        4.capture 使用事件捕获模式
+        5.self 只有event.target是当前操作的元素才触发事件
+        6.passive 事件的默认行为立即执行，无需等待事件回调执行完毕
      -->
     <div id="root">
-        <h3>hello, world</h3>
-        <button v-on:click="showInfo1">点我1（不传参）</button>
-        <button @click="showInfo2(66, $event)">点我2（传参）</button>
+        <h3>hello, world, {{name}}</h3>
+        <!-- 阻止默认事件（常用） -->
+        <a href="http://www.baidu.com" @click.prevent="showInfo()">百度</a>
+        <!-- 阻止事件冒泡（常用） -->
+        <div @click="showInfo2" class="demo1">
+            <button @click.stop="showInfo">点我</button>
+        </div>
+        <!-- 事件只触发一次（常用） -->
+        <button @click.once="showInfo">只触发一次</button>
+        <!-- 使用事件的捕获模式（常用） -->
+        <div class="box1" @click.capture="showMsg(1, $event)">
+            div1
+            <div class="box2" @click="showMsg(2, $event)">
+                div2
+            </div>
+        </div>
+        <!-- 只有当event.target是当前操作的元素时才触发事件 -->
+        <div class="demo1" @click.self="showInfo">
+            <button @click="showInfo">点我3</button>
+        </div>
+        <!-- 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+        <ul @wheel.passive="demo" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
     </div>
 </body>
 <script type="text/javascript">
@@ -30,16 +81,23 @@
             name: "哈哈"
         },
         methods:{
-            showInfo1(event){
-                console.log(event.target.innerText)
-                // alert("hello")
-                // 此处的this 是vm，但如果用箭头函数定义的话，this是window
-                // console.log(this)
+            showInfo(event){
+                alert("hello")
+                console.log(event.target)
+
             },
-            showInfo2(number, event){
+            showInfo2(event){
+                alert("showInfo2")
                 console.log(event.target.innerText)
-                alert("你好，我是button2")
+            },
+            showMsg(number, event){
                 console.log(number)
+            },
+            demo(){
+                for(let i = 0; i<100000; i++){
+                    console.log("#")
+                }
+                console.log("累坏了")        
             }
         }
     })
