@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>姓名案例_watch实现</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 
+				computed和watch之间的区别：
+						1.computed能完成的功能，watch都可以完成。
+						2.watch能完成的功能，computed不一定能完成，例如：watch可以进行异步操作。
+						由于computed使用的是返回值，而watch则是亲自修改代码，导致watch可以异步操作，而computed却不行
+				两个重要的小原则：
+							1.所被Vue管理的函数，最好写成普通函数，这样this的指向才是vm 或 组件实例对象。
+							2.所有不被Vue所管理的函数（定时器的回调函数、ajax的回调函数等、Promise的回调函数），最好写成箭头函数，
+								这样this的指向才是vm 或 组件实例对象。
+		-->
+		<!-- 准备好一个容器-->
+		<div id="root">
+			姓：<input type="text" v-model="firstName"> <br/><br/>
+			名：<input type="text" v-model="lastName"> <br/><br/>
+			全名：<span>{{fullName}}</span> <br/><br/>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				firstName:'张',
+				lastName:'三',
+				fullName:'张-三'
+			},
+			watch:{
+				// 等一会再修改全名
+				firstName(val){
+					// 箭头函数，是没有this的，会往外找，
+					// 找到firstName的this，firstName是由vue管理的普通函数，所以它的this是vm
+					setTimeout(()=>{
+						console.log(this)
+						this.fullName = val + '-' + this.lastName
+					},1000);
+				},
+				// firstName(val){
+				// 	// 此时this指向的是window,定时器的回调是由js引擎进行的
+				// 	setTimeout(function(){
+				// 		console.log(this)
+				// 		this.fullName = val + '-' + this.lastName
+				// 	},1000);
+				// },
+				lastName(val){
+					this.fullName = this.firstName + '-' + val
+				}
+			}
+		})
+	</script>
+</html>
