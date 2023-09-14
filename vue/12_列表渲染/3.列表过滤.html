@@ -22,32 +22,36 @@
 			
 			//用watch实现
 			//#region 
-			/* new Vue({
-				el:'#root',
-				data:{
-					keyWord:'',
-					persons:[
-						{id:'001',name:'马冬梅',age:19,sex:'女'},
-						{id:'002',name:'周冬雨',age:20,sex:'女'},
-						{id:'003',name:'周杰伦',age:21,sex:'男'},
-						{id:'004',name:'温兆伦',age:22,sex:'男'}
-					],
-					filPerons:[]
-				},
-				watch:{
-					keyWord:{
-						immediate:true,
-						handler(val){
-							this.filPerons = this.persons.filter((p)=>{
-								return p.name.indexOf(val) !== -1
-							})
-						}
-					}
-				}
-			}) */
+			// new Vue({
+			// 	el:'#root',
+			// 	data:{
+			// 		keyWord:'',
+			// 		persons:[
+			// 			{id:'001',name:'马冬梅',age:19,sex:'女'},
+			// 			{id:'002',name:'周冬雨',age:20,sex:'女'},
+			// 			{id:'003',name:'周杰伦',age:21,sex:'男'},
+			// 			{id:'004',name:'温兆伦',age:22,sex:'男'}
+			// 		],
+			// 		filPerons:[]
+			// 	},
+			// 	watch:{
+			// 		keyWord:{
+			// 			// 立刻执行，一上来输入为空
+			// 			// p.name.indexOf('') 结果为0
+			// 			// 所以一上来可以显示所有的列表的数据
+			// 			immediate:true,
+			// 			handler(val){
+			// 				this.filPerons = this.persons.filter((p)=>{
+			// 					return p.name.indexOf(val) !== -1
+			// 				})
+			// 			}
+			// 		}
+			// 	}
+			// }) 
 			//#endregion
 			
 			//用computed实现
+			// 当computed和watch都能实现时，优先使用computed
 			new Vue({
 				el:'#root',
 				data:{
@@ -61,6 +65,8 @@
 				},
 				computed:{
 					filPerons(){
+						// 计算属性依靠返回值，监视属性不依赖返回值
+						// 计算属性一开始就会计算，此外当依赖的值发生改变就会重新计算
 						return this.persons.filter((p)=>{
 							return p.name.indexOf(this.keyWord) !== -1
 						})
