@@ -10,6 +10,7 @@
 		<!-- 
 			过滤器：
 				定义：对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）。
+					本质上就是一个函数
 				语法：
 						1.注册过滤器：Vue.filter(name,callback) 或 new Vue{filters:{}}
 						2.使用过滤器：{{ xxx | 过滤器名}}  或  v-bind:属性 = "xxx | 过滤器名"
@@ -38,7 +39,7 @@
 
 	<script type="text/javascript">
 		Vue.config.productionTip = false
-		//全局过滤器
+		//全局过滤器，必须在 new vue之前定义好
 		Vue.filter('mySlice',function(value){
 			return value.slice(0,4)
 		})
@@ -61,10 +62,15 @@
 			},
 			//局部过滤器
 			filters:{
+				// 如果没有str，默认为str='YYYY年MM月DD日 HH:mm:ss'
 				timeFormater(value,str='YYYY年MM月DD日 HH:mm:ss'){
 					// console.log('@',value)
 					return dayjs(value).format(str)
 				}
+				// 可以在局部过滤器里加多个 过滤器
+				// mySlice(value){
+				// 	return value.slice(0,4)
+				// }
 			}
 		})
 

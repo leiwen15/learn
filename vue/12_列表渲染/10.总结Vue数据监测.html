@@ -28,7 +28,7 @@
 										(1).调用原生对应的方法对数组进行更新。
 										(2).重新解析模板，进而更新页面。
 
-				4.在Vue修改数组中的某个元素一定要用如下方法：
+				4.在Vue修改数组中的某个元素一定要用如下方法，以下两种方式都可以：
 							1.使用这些API:push()、pop()、shift()、unshift()、splice()、sort()、reverse()
 							2.Vue.set() 或 vm.$set()
 				
@@ -94,11 +94,13 @@
 					this.student.hobby.push('学习')
 				},
 				updateHobby(){
-					// this.student.hobby.splice(0,1,'开车')
+					// this.student.hobby.splice(0,1,'开车') 
 					// Vue.set(this.student.hobby,0,'开车')
-					this.$set(this.student.hobby,0,'开车')
+					// this.$set(this.student.hobby,0,'开车')
 				},
 				removeSmoke(){
+					// 所有不以vue管理的函数，尽量使用箭头函数
+					// 直接替换原来的数组
 					this.student.hobby = this.student.hobby.filter((h)=>{
 						return h !== '抽烟'
 					})

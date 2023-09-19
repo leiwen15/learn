@@ -22,11 +22,16 @@
 		-->
 		<!-- 准备好一个容器-->
 		<div id="root">
+			<!-- prevent 阻止默认行为 -->
 			<form @submit.prevent="demo">
 				账号：<input type="text" v-model.trim="userInfo.account"> <br/><br/>
 				密码：<input type="password" v-model="userInfo.password"> <br/><br/>
+				<!--  input type="number" v-model.number="userInfo.age" 这两个同时使用，
+					一个用于控制输入类型，
+					另一个用于转化数字类型-->
 				年龄：<input type="number" v-model.number="userInfo.age"> <br/><br/>
 				性别：
+				<!-- name 设置为一组，就可以在组内单选 -->
 				男<input type="radio" name="sex" v-model="userInfo.sex" value="male">
 				女<input type="radio" name="sex" v-model="userInfo.sex" value="female"> <br/><br/>
 				爱好：
